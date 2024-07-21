@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Typer.Replays
     {
         public List<TyperAction> Actions = new List<TyperAction>();
 
-        public TyperReplayFrame(TyperAction? button = null)
+        public TyperReplayFrame(double time, TyperAction? button = null) : base(time)
         {
             if (button.HasValue)
                 Actions.Add(button.Value);

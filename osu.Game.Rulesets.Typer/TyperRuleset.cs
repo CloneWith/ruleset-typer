@@ -10,6 +10,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Osu.Mods;
 using osu.Game.Rulesets.Typer.Beatmaps;
 using osu.Game.Rulesets.Typer.Mods;
 using osu.Game.Rulesets.Typer.UI;
@@ -31,6 +32,9 @@ namespace osu.Game.Rulesets.Typer
         {
             switch (type)
             {
+                case ModType.DifficultyReduction:
+                    return new[] { new TyperModNoFail() };
+
                 case ModType.Automation:
                     return new[] { new TyperModAutoplay() };
 

@@ -17,10 +17,10 @@ namespace osu.Game.Rulesets.Typer
 
     public enum TyperAction
     {
-        [Description("Button 1")]
+        [Description("Super Button 1")]
         Button1,
 
-        [Description("Button 2")]
+        [Description("Super Button 2")]
         Button2,
     }
 }
