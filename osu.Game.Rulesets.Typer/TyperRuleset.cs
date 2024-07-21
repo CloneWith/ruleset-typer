@@ -74,6 +74,10 @@ namespace osu.Game.Rulesets.Typer
             new KeyBinding(InputKey.Y, TyperAction.ButtonY),
             new KeyBinding(InputKey.Z, TyperAction.ButtonZ),
         };
+        public static string ActionToString(TyperAction action)
+        {
+            return ((char)action).ToString();
+        }
 
         public override Drawable CreateIcon() => new SpriteText
         {

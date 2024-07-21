@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osu.Game.Graphics;
@@ -20,7 +21,7 @@ using osuTK.Input;
 
 namespace osu.Game.Rulesets.Typer.Objects.Drawables
 {
-    public partial class DrawableTyperHitObject : DrawableHitObject<TyperHitObject>
+    public partial class DrawableTyperHitObject : DrawableHitObject<TyperHitObject>, IKeyBindingHandler
     {
         private const double allowable_error = 150;
 
@@ -39,7 +40,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             Anchor = Anchor.CentreLeft;
 
             keyToHit = (char)seedGenerator.Next('A', 'Z' + 1);
-            hitObject.key = keyToHit;
+            hitObject.key = (TyperAction)keyToHit;
 
             AddRangeInternal(new Drawable[]
             {
@@ -72,7 +73,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
                             Font = OsuFont.Default.With(size: 52, weight: FontWeight.Bold),
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Text = hitObject.key.ToString(),
+                            Text = TyperRuleset.ActionToString(hitObject.key),
                         }
                     }
                 },

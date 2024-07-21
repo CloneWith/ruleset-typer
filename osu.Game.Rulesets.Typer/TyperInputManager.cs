@@ -4,7 +4,6 @@
 using System.ComponentModel;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.UI;
-using osuTK.Input;
 
 namespace osu.Game.Rulesets.Typer
 {
@@ -18,31 +17,31 @@ namespace osu.Game.Rulesets.Typer
 
     public enum TyperAction
     {
-        [Description("A")] ButtonA,
-        [Description("B")] ButtonB,
-        [Description("C")] ButtonC,
-        [Description("D")] ButtonD,
-        [Description("E")] ButtonE,
-        [Description("F")] ButtonF,
-        [Description("G")] ButtonG,
-        [Description("H")] ButtonH,
-        [Description("I")] ButtonI,
-        [Description("J")] ButtonJ,
-        [Description("K")] ButtonK,
-        [Description("L")] ButtonL,
-        [Description("M")] ButtonM,
-        [Description("N")] ButtonN,
-        [Description("O")] ButtonO,
-        [Description("P")] ButtonP,
-        [Description("Q")] ButtonQ,
-        [Description("R")] ButtonR,
-        [Description("S")] ButtonS,
-        [Description("T")] ButtonT,
-        [Description("U")] ButtonU,
-        [Description("V")] ButtonV,
-        [Description("W")] ButtonW,
-        [Description("X")] ButtonX,
-        [Description("Y")] ButtonY,
-        [Description("Z")] ButtonZ,
+        [Description("A")] ButtonA = 'A',
+        [Description("B")] ButtonB = 'B',
+        [Description("C")] ButtonC = 'C',
+        [Description("D")] ButtonD = 'D',
+        [Description("E")] ButtonE = 'E',
+        [Description("F")] ButtonF = 'F',
+        [Description("G")] ButtonG = 'G',
+        [Description("H")] ButtonH = 'H',
+        [Description("I")] ButtonI = 'I',
+        [Description("J")] ButtonJ = 'J',
+        [Description("K")] ButtonK = 'K',
+        [Description("L")] ButtonL = 'L',
+        [Description("M")] ButtonM = 'M',
+        [Description("N")] ButtonN = 'N',
+        [Description("O")] ButtonO = 'O',
+        [Description("P")] ButtonP = 'P',
+        [Description("Q")] ButtonQ = 'Q',
+        [Description("R")] ButtonR = 'R',
+        [Description("S")] ButtonS = 'S',
+        [Description("T")] ButtonT = 'T',
+        [Description("U")] ButtonU = 'U',
+        [Description("V")] ButtonV = 'V',
+        [Description("W")] ButtonW = 'W',
+        [Description("X")] ButtonX = 'X',
+        [Description("Y")] ButtonY = 'Y',
+        [Description("Z")] ButtonZ = 'Z',
     }
 }
