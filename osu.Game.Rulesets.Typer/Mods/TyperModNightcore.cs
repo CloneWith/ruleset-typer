@@ -2,10 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Typer.Objects;
 
 namespace osu.Game.Rulesets.Typer.Mods
 {
-    public class TyperModNoFail : ModNoFail
+    public class TyperModNightcore : ModNightcore<TyperHitObject>
     {
     }
 }

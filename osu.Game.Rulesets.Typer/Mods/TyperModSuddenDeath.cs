@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Typer.Mods
 {
-    public class TyperModNoFail : ModNoFail
+    public class TyperModSuddenDeath : ModSuddenDeath
     {
     }
 }
