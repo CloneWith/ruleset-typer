@@ -64,7 +64,6 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
                     {
                         Samples = obj.Samples,
                         StartTime = obj.StartTime,
-                        key = 'A'
                     };
 
                     break;
