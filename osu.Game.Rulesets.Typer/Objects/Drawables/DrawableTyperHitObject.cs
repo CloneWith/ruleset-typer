@@ -38,7 +38,8 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             Origin = Anchor.CentreLeft;
             Anchor = Anchor.CentreLeft;
 
-            keyToHit = (char)seedGenerator.Next('a', 'z' + 1);
+            keyToHit = (char)seedGenerator.Next('A', 'Z' + 1);
+            hitObject.key = keyToHit;
 
             AddRangeInternal(new Drawable[]
             {
@@ -71,7 +72,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
                             Font = OsuFont.Default.With(size: 52, weight: FontWeight.Bold),
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Text = keyToHit.ToString().ToUpper(),
+                            Text = hitObject.key.ToString(),
                         }
                     }
                 },
@@ -80,25 +81,34 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
-            if (userTriggered)
+            if (!userTriggered)
+            {
+                if (!HitObject.HitWindows.CanBeHit(timeOffset))
+                    ApplyMinResult();
+                return;
+            }
+
+            var result = HitObject.HitWindows.ResultFor(timeOffset);
+            if (result == HitResult.None)
+                return;
+            ApplyResult(result);
+            /*if (userTriggered)
             {
                 if (Math.Abs(timeOffset) >= allowable_error)
                     return;
 
                 if (!wasCorrectKey)
-                    ApplyResult(r => r.Type = HitResult.Miss);
+                    ApplyMinResult();
                 else
-                    ApplyResult(r => r.Type = HitResult.Perfect);
+                    ApplyMaxResult();
             }
-            else if (timeOffset >= allowable_error)
-            {
-                ApplyResult(r => r.Type = HitResult.Miss);
-            }
+            else if (timeOffset >= allowable_error) ApplyMinResult();
+            */
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)
         {
-            bool correctKey = e.Key - Key.A == keyToHit - 'a';
+            bool correctKey = e.Key - Key.A == keyToHit - 'A';
 
             if (!Result.HasResult)
             {
@@ -120,7 +130,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
         protected override void OnKeyUp(KeyUpEvent e)
         {
-            bool correctKey = e.Key - Key.A == keyToHit - 'a';
+            bool correctKey = e.Key - Key.A == keyToHit - 'A';
 
             if (State.Value != ArmedState.Hit && correctKey)
             {
@@ -137,7 +147,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
             const float verticality = 80000;
 
-            Y = (keyToHit - 'a') / 26f * verticality - (verticality * 0.5f);
+            Y = (keyToHit - 'A') / 26f * verticality - (verticality * 0.5f);
             this.MoveToY(0, InitialLifetimeOffset, Easing.OutElasticHalf);
         }
 

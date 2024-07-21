@@ -47,8 +47,32 @@ namespace osu.Game.Rulesets.Typer
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
-            new KeyBinding(InputKey.Z, TyperAction.Button1),
-            new KeyBinding(InputKey.X, TyperAction.Button2),
+            new KeyBinding(InputKey.A, TyperAction.ButtonA),
+            new KeyBinding(InputKey.B, TyperAction.ButtonB),
+            new KeyBinding(InputKey.C, TyperAction.ButtonC),
+            new KeyBinding(InputKey.D, TyperAction.ButtonD),
+            new KeyBinding(InputKey.E, TyperAction.ButtonE),
+            new KeyBinding(InputKey.F, TyperAction.ButtonF),
+            new KeyBinding(InputKey.G, TyperAction.ButtonG),
+            new KeyBinding(InputKey.H, TyperAction.ButtonH),
+            new KeyBinding(InputKey.I, TyperAction.ButtonI),
+            new KeyBinding(InputKey.J, TyperAction.ButtonJ),
+            new KeyBinding(InputKey.K, TyperAction.ButtonK),
+            new KeyBinding(InputKey.L, TyperAction.ButtonL),
+            new KeyBinding(InputKey.M, TyperAction.ButtonM),
+            new KeyBinding(InputKey.N, TyperAction.ButtonN),
+            new KeyBinding(InputKey.O, TyperAction.ButtonO),
+            new KeyBinding(InputKey.P, TyperAction.ButtonP),
+            new KeyBinding(InputKey.Q, TyperAction.ButtonQ),
+            new KeyBinding(InputKey.R, TyperAction.ButtonR),
+            new KeyBinding(InputKey.S, TyperAction.ButtonS),
+            new KeyBinding(InputKey.T, TyperAction.ButtonT),
+            new KeyBinding(InputKey.U, TyperAction.ButtonU),
+            new KeyBinding(InputKey.V, TyperAction.ButtonV),
+            new KeyBinding(InputKey.W, TyperAction.ButtonW),
+            new KeyBinding(InputKey.X, TyperAction.ButtonX),
+            new KeyBinding(InputKey.Y, TyperAction.ButtonY),
+            new KeyBinding(InputKey.Z, TyperAction.ButtonZ),
         };
 
         public override Drawable CreateIcon() => new SpriteText

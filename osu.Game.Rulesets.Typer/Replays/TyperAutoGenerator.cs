@@ -27,14 +27,13 @@ namespace osu.Game.Rulesets.Typer.Replays
             bool hitButton = true;
 
             Frames.Add(new TyperReplayFrame(Beatmap.HitObjects[0].StartTime - 1000));
-            TyperAction defAction = TyperAction.Button1;
+            // TyperAction defAction = TyperAction.ButtonA;
 
             for (int i = 0; i < Beatmap.HitObjects.Count; i++)
             {
-                TyperHitObject a = Beatmap.HitObjects[i];
                 TyperHitObject h = Beatmap.HitObjects[i];
                 double endTime = h.GetEndTime();
-                Frames.Add(new TyperReplayFrame(h.StartTime, defAction));
+                Frames.Add(new TyperReplayFrame(h.StartTime, h.Translate()));
                 // todo: add required inputs and extra frames.
                 var nextHitObject = GetNextObject(i); // Get the next object that requires pressing the same button
                 bool canDelayKeyUp = nextHitObject == null || nextHitObject.StartTime > endTime + KEY_UP_DELAY;

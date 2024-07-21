@@ -4,6 +4,7 @@
 using System.ComponentModel;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.UI;
+using osuTK.Input;
 
 namespace osu.Game.Rulesets.Typer
 {
@@ -17,10 +18,31 @@ namespace osu.Game.Rulesets.Typer
 
     public enum TyperAction
     {
-        [Description("Super Button 1")]
-        Button1,
-
-        [Description("Super Button 2")]
-        Button2,
+        [Description("A")] ButtonA,
+        [Description("B")] ButtonB,
+        [Description("C")] ButtonC,
+        [Description("D")] ButtonD,
+        [Description("E")] ButtonE,
+        [Description("F")] ButtonF,
+        [Description("G")] ButtonG,
+        [Description("H")] ButtonH,
+        [Description("I")] ButtonI,
+        [Description("J")] ButtonJ,
+        [Description("K")] ButtonK,
+        [Description("L")] ButtonL,
+        [Description("M")] ButtonM,
+        [Description("N")] ButtonN,
+        [Description("O")] ButtonO,
+        [Description("P")] ButtonP,
+        [Description("Q")] ButtonQ,
+        [Description("R")] ButtonR,
+        [Description("S")] ButtonS,
+        [Description("T")] ButtonT,
+        [Description("U")] ButtonU,
+        [Description("V")] ButtonV,
+        [Description("W")] ButtonW,
+        [Description("X")] ButtonX,
+        [Description("Y")] ButtonY,
+        [Description("Z")] ButtonZ,
     }
 }
