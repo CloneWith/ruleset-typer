@@ -21,7 +21,7 @@ using osuTK.Input;
 
 namespace osu.Game.Rulesets.Typer.Objects.Drawables
 {
-    public partial class DrawableTyperHitObject : DrawableHitObject<TyperHitObject>, IKeyBindingHandler
+    public partial class DrawableTyperHitObject : DrawableHitObject<TyperHitObject>, IKeyBindingHandler<TyperAction>
     {
         private const double allowable_error = 150;
 
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
         private readonly Container keyContent;
 
-        private readonly char keyToHit;
+        private readonly TyperAction keyToHit;
 
         public DrawableTyperHitObject(TyperHitObject hitObject)
             : base(hitObject)
@@ -39,8 +39,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             Origin = Anchor.CentreLeft;
             Anchor = Anchor.CentreLeft;
 
-            keyToHit = (char)hitObject.key;
-            // hitObject.key = (TyperAction)keyToHit;
+            keyToHit = hitObject.key;
 
             AddRangeInternal(new Drawable[]
             {
@@ -93,24 +92,12 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             if (result == HitResult.None)
                 return;
             ApplyResult(result);
-            /*if (userTriggered)
-            {
-                if (Math.Abs(timeOffset) >= allowable_error)
-                    return;
-
-                if (!wasCorrectKey)
-                    ApplyMinResult();
-                else
-                    ApplyMaxResult();
-            }
-            else if (timeOffset >= allowable_error) ApplyMinResult();
-            */
         }
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        public bool OnPressed(KeyBindingPressEvent<TyperAction> e)
         {
-            bool correctKey = e.Key - Key.A == keyToHit - 'A';
-
+            if (e.Repeat) return false;
+            bool correctKey = e.Action == keyToHit;
             if (!Result.HasResult)
             {
                 wasCorrectKey = correctKey;
@@ -125,30 +112,29 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
                 return wasCorrectKey;
             }
-
-            return base.OnKeyDown(e);
+            return false;
+            // return base.OnPressed(e);
         }
 
-        protected override void OnKeyUp(KeyUpEvent e)
+        public void OnReleased(KeyBindingReleaseEvent<TyperAction> e)
         {
-            bool correctKey = e.Key - Key.A == keyToHit - 'A';
+            bool correctKey = e.Action == keyToHit;
 
             if (State.Value != ArmedState.Hit && correctKey)
             {
                 keyContent.ScaleTo(1, 300, Easing.OutQuint);
                 keyContent.RotateTo(0, 300, Easing.OutQuint);
             }
-
-            base.OnKeyUp(e);
+            // base.OnReleased(e);
         }
-
+        
         protected override void UpdateInitialTransforms()
         {
             base.UpdateInitialTransforms();
 
             const float verticality = 80000;
-
-            Y = (keyToHit - 'A') / 26f * verticality - (verticality * 0.5f);
+                
+            Y = ((char)keyToHit - 'A') / 26f * verticality - (verticality * 0.5f);
             this.MoveToY(0, InitialLifetimeOffset, Easing.OutElasticHalf);
         }
 
