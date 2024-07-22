@@ -23,41 +23,20 @@ namespace osu.Game.Rulesets.Typer.UI
     [Cached]
     public partial class DrawableTyperRuleset : DrawableScrollingRuleset<TyperHitObject>
     {
-        private readonly Random seedGenerator;
 
         public DrawableTyperRuleset(TyperRuleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
             : base(ruleset, beatmap, mods)
         {
             Direction.Value = ScrollingDirection.Left;
             TimeRange.Value = 10000;
-
-            seedGenerator = createSeedGenerator(Beatmap.BeatmapInfo.MD5Hash);
         }
 
         protected override Playfield CreatePlayfield() => new TyperPlayfield();
 
         protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new TyperFramedReplayInputHandler(replay);
 
-        public override DrawableHitObject<TyperHitObject> CreateDrawableRepresentation(TyperHitObject h) => new DrawableTyperHitObject(h, seedGenerator);
+        public override DrawableHitObject<TyperHitObject> CreateDrawableRepresentation(TyperHitObject h) => new DrawableTyperHitObject(h);
 
         protected override PassThroughInputManager CreateInputManager() => new TyperInputManager(Ruleset?.RulesetInfo);
-
-        private static Random createSeedGenerator(string beatmapHash)
-        {
-            byte[] bytes = Convert.FromHexString(beatmapHash);
-
-            Debug.Assert(bytes.Length == 16);
-
-            int[] chunks = new int[4];
-
-            for (int i = 0; i < 4; i++)
-            {
-                chunks[i] = BitConverter.ToInt32(bytes, i * 4);
-            }
-
-            int seed = chunks.Aggregate(0, (a, e) => a ^ e);
-
-            return new Random(seed);
-        }
     }
 }

@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
         private readonly char keyToHit;
 
-        public DrawableTyperHitObject(TyperHitObject hitObject, Random seedGenerator)
+        public DrawableTyperHitObject(TyperHitObject hitObject)
             : base(hitObject)
         {
             Size = new Vector2(80);
@@ -39,8 +39,8 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             Origin = Anchor.CentreLeft;
             Anchor = Anchor.CentreLeft;
 
-            keyToHit = (char)seedGenerator.Next('A', 'Z' + 1);
-            hitObject.key = (TyperAction)keyToHit;
+            keyToHit = (char)hitObject.key;
+            // hitObject.key = (TyperAction)keyToHit;
 
             AddRangeInternal(new Drawable[]
             {

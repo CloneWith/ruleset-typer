@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using osu.Framework.Utils;
 using osu.Game.Audio;
@@ -16,9 +18,13 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
 {
     public class TyperBeatmapConverter : BeatmapConverter<TyperHitObject>
     {
+        private Random seedGenerator;
+
         public TyperBeatmapConverter(IBeatmap beatmap, Ruleset ruleset)
             : base(beatmap, ruleset)
         {
+            try { seedGenerator = createSeedGenerator(Beatmap.BeatmapInfo.MD5Hash); }
+            catch (Exception) { };
         }
 
         // todo: Check for conversion types that should be supported (ie. Beatmap.HitObjects.Any(h => h is IHasXPosition))
@@ -49,6 +55,7 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
                         {
                             StartTime = j,
                             Samples = currentSamples,
+                            key = nextRandomKey(seedGenerator),
                         };
 
                         i = (i + 1) % allSamples.Count;
@@ -64,10 +71,34 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
                     {
                         Samples = obj.Samples,
                         StartTime = obj.StartTime,
+                        key = nextRandomKey(seedGenerator),
                     };
 
                     break;
             }
+        }
+
+        public static Random createSeedGenerator(string beatmapHash)
+        {
+            byte[] bytes = System.Convert.FromHexString(beatmapHash);
+
+            Debug.Assert(bytes.Length == 16);
+
+            int[] chunks = new int[4];
+
+            for (int i = 0; i < 4; i++)
+            {
+                chunks[i] = BitConverter.ToInt32(bytes, i * 4);
+            }
+
+            int seed = chunks.Aggregate(0, (a, e) => a ^ e);
+
+            return new Random(seed);
+        }
+
+        private static TyperAction nextRandomKey(Random seedGen)
+        {
+            return (TyperAction)seedGen.Next('A', 'Z' + 1);
         }
     }
 }
