@@ -17,7 +17,6 @@ using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osuTK;
 using osuTK.Graphics;
-using osuTK.Input;
 
 namespace osu.Game.Rulesets.Typer.Objects.Drawables
 {
@@ -25,7 +24,11 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
     {
         private const double allowable_error = 150;
 
+        private bool validActionPressed;
+
         private bool wasCorrectKey;
+
+        private double? lastPressHandleTime;
 
         private readonly Container keyContent;
 
@@ -79,6 +82,12 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             });
         }
 
+        protected override void OnFree()
+        {
+            base.OnFree();
+
+            validActionPressed = false;
+        }
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
             if (!userTriggered)
@@ -91,16 +100,27 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             var result = HitObject.HitWindows.ResultFor(timeOffset);
             if (result == HitResult.None)
                 return;
-            ApplyResult(result);
+
+            if (!validActionPressed)
+                ApplyMinResult();
+            else
+                ApplyResult(result);
         }
 
         public bool OnPressed(KeyBindingPressEvent<TyperAction> e)
         {
+            if (lastPressHandleTime == Time.Current)
+                return true;
+            if (Judged)
+                return false;
+
             if (e.Repeat) return false;
-            bool correctKey = e.Action == keyToHit;
+
+            validActionPressed = (char)e.Action == (char)keyToHit;
+
             if (!Result.HasResult)
             {
-                wasCorrectKey = correctKey;
+                wasCorrectKey = validActionPressed;
 
                 if (wasCorrectKey)
                 {
@@ -108,9 +128,9 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
                     keyContent.RotateTo(RNG.NextSingle(30) - 15, 500, Easing.OutElastic);
                 }
 
-                UpdateResult(true);
+                bool result = UpdateResult(true);
 
-                return wasCorrectKey;
+                return wasCorrectKey && result;
             }
             return false;
             // return base.OnPressed(e);
@@ -144,6 +164,10 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
             switch (state)
             {
+                case ArmedState.Idle:
+                    validActionPressed = false;
+                    break;
+
                 case ArmedState.Hit:
                     keyContent.ScaleTo(5f, duration, Easing.OutQuint);
 
