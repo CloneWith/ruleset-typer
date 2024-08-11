@@ -34,6 +34,7 @@ namespace osu.Game.Rulesets.Typer
                 case ModType.DifficultyReduction:
                     return new Mod[]
                     {
+                        new TyperModEasy(),
                         new TyperModNoFail(),
                         new MultiMod(new TyperModHalfTime(), new TyperModDaycore()),
                     };
@@ -41,8 +42,11 @@ namespace osu.Game.Rulesets.Typer
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
+                        new TyperModHardRock(),
                         new MultiMod(new TyperModSuddenDeath(), new TyperModPerfect()),
                         new MultiMod(new TyperModDoubleTime(), new TyperModNightcore()),
+                        new TyperModHidden(),
+                        new TyperModFlashlight(),
                         new ModAccuracyChallenge(),
                     };
 
@@ -50,6 +54,13 @@ namespace osu.Game.Rulesets.Typer
                     return new Mod[]
                     {
                         new MultiMod(new TyperModAutoplay(), new TyperModCinema()),
+                    };
+
+                case ModType.Conversion:
+                    return new Mod[]
+                    {
+                        new TyperModDifficultyAdjust(),
+                        new TyperModConstantSpeed(),
                     };
 
                 case ModType.Fun:

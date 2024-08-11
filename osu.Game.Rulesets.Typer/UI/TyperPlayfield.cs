@@ -18,6 +18,8 @@ namespace osu.Game.Rulesets.Typer.UI
     {
         public const float HEIGHT = 80;
 
+        internal Drawable HitTarget = null!;
+
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -32,7 +34,7 @@ namespace osu.Game.Rulesets.Typer.UI
             AddRangeInternal(new Drawable[]
             {
                 HitObjectContainer,
-                new HitBox
+                HitTarget = new HitBox
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
