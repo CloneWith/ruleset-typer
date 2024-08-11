@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
         public DrawableTyperHitObject(TyperHitObject hitObject)
             : base(hitObject)
         {
-            Size = new Vector2(80);
+            Size = new Vector2(hitObject.Radius * 2);
 
             Origin = Anchor.CentreLeft;
             Anchor = Anchor.CentreLeft;
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
                         },
                         new OsuSpriteText
                         {
-                            Font = OsuFont.Default.With(size: 52, weight: FontWeight.Bold),
+                            Font = OsuFont.Default.With(size: (hitObject.Radius * 2) * 0.6f, weight: FontWeight.Bold),
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Text = TyperRuleset.ActionToString(hitObject.key),

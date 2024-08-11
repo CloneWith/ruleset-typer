@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Rulesets.Typer.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Typer.UI
@@ -83,7 +84,7 @@ namespace osu.Game.Rulesets.Typer.UI
                     Hollow = true,
                 };
 
-                Size = new Vector2(80);
+                Size = new Vector2(new TyperHitObject().Radius);
 
                 AddRangeInternal(new Drawable[]
                 {
