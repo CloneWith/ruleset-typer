@@ -14,7 +14,6 @@ using osu.Game.Rulesets.Typer.Beatmaps;
 using osu.Game.Rulesets.Typer.Mods;
 using osu.Game.Rulesets.Typer.UI;
 using osu.Game.Rulesets.UI;
-using osu.Game.Resources.Localisation.Web;
 
 namespace osu.Game.Rulesets.Typer
 {
