@@ -18,13 +18,13 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
 {
     public class TyperBeatmapConverter : BeatmapConverter<TyperHitObject>
     {
-        private Random seedGenerator;
+        private readonly Random seedGenerator;
 
         public TyperBeatmapConverter(IBeatmap beatmap, Ruleset ruleset)
             : base(beatmap, ruleset)
         {
-            try { seedGenerator = createSeedGenerator(Beatmap.BeatmapInfo.MD5Hash); }
-            catch (Exception) { };
+            try { seedGenerator = CreateSeedGenerator(Beatmap.BeatmapInfo.MD5Hash); }
+            catch (Exception) { }
         }
 
         // todo: Check for conversion types that should be supported (ie. Beatmap.HitObjects.Any(h => h is IHasXPosition))
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
             switch (obj)
             {
                 case IHasPath pathData:
-                    IList<IList<HitSampleInfo>> allSamples = obj is IHasPathWithRepeats curveData ? curveData.NodeSamples : new List<IList<HitSampleInfo>>(new[] { obj.Samples });
+                    IList<IList<HitSampleInfo>> allSamples = obj is IHasPathWithRepeats curveData ? curveData.NodeSamples : new List<IList<HitSampleInfo>>([obj.Samples]);
 
                     int i = 0;
 
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
                     TimingControlPoint timingPoint = beatmap.ControlPointInfo.TimingPointAt(obj.StartTime);
                     double beatLength = timingPoint.BeatLength;
 
-                    double tickSpacing = Math.Min(beatLength / beatmap.Difficulty.SliderTickRate, (double)pathData.Duration / spans);
+                    double tickSpacing = Math.Min(beatLength / beatmap.Difficulty.SliderTickRate, pathData.Duration / spans);
 
                     for (double j = obj.StartTime; j <= obj.StartTime + pathData.Duration + tickSpacing / 8; j += tickSpacing)
                     {
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
             }
         }
 
-        public static Random createSeedGenerator(string beatmapHash)
+        public static Random CreateSeedGenerator(string beatmapHash)
         {
             byte[] bytes = System.Convert.FromHexString(beatmapHash);
 

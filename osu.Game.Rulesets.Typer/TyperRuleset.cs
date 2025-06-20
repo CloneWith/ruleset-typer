@@ -7,7 +7,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Bindings;
 using osu.Game.Beatmaps;
-using osu.Game.Graphics;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
@@ -117,12 +116,11 @@ namespace osu.Game.Rulesets.Typer
             return ((char)action).ToString();
         }
 
-        public override Drawable CreateIcon() => new SpriteText
+        public override Drawable CreateIcon() => new SpriteIcon
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
-            Text = ShortName[0].ToString(),
-            Font = OsuFont.Default.With(size: 18),
+            Icon = FontAwesome.Solid.Keyboard,
         };
 
         protected override IEnumerable<HitResult> GetValidHitResults()
