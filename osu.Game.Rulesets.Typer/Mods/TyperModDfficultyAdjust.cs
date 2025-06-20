@@ -1,7 +1,8 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Linq;
+using System.Collections.Generic;
+using osu.Framework.Localisation;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Mods;
@@ -19,17 +20,15 @@ namespace osu.Game.Rulesets.Typer.Mods
             ReadCurrentFromDifficulty = _ => 1,
         };
 
-        public override string SettingDescription
+        public override IEnumerable<(LocalisableString setting, LocalisableString value)> SettingDescription
         {
             get
             {
-                string scrollSpeed = ScrollSpeed.IsDefault ? string.Empty : $"Scroll x{ScrollSpeed.Value:N2}";
+                foreach (var valueTuple in base.SettingDescription)
+                    yield return valueTuple;
 
-                return string.Join(", ", new[]
-                {
-                    base.SettingDescription,
-                    scrollSpeed
-                }.Where(s => !string.IsNullOrEmpty(s)));
+                if (!ScrollSpeed.IsDefault)
+                    yield return ("Scroll speed", $"Scroll x{ScrollSpeed.Value:N2}");
             }
         }
 
