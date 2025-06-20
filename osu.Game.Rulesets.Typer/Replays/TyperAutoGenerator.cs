@@ -1,11 +1,9 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Extensions.ObjectExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Typer.Objects;
 using osu.Game.Rulesets.Replays;
-using osu.Game.Rulesets.Typer.Beatmaps;
 using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Typer.Replays
@@ -32,10 +30,9 @@ namespace osu.Game.Rulesets.Typer.Replays
             {
                 TyperHitObject h = Beatmap.HitObjects[i];
                 double endTime = h.GetEndTime();
-                Frames.Add(new TyperReplayFrame(h.StartTime, h.key));
+                Frames.Add(new TyperReplayFrame(h.StartTime, h.Key));
                 // todo: add required inputs and extra frames.
-                double calculatedDelay = KEY_UP_DELAY;
-                Frames.Add(new TyperReplayFrame(endTime + calculatedDelay));
+                Frames.Add(new TyperReplayFrame(endTime + KEY_UP_DELAY));
 
                 hitButton = !hitButton;
             }

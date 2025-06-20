@@ -1,10 +1,7 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Input;
 using osu.Game.Beatmaps;
@@ -23,7 +20,6 @@ namespace osu.Game.Rulesets.Typer.UI
     [Cached]
     public partial class DrawableTyperRuleset : DrawableScrollingRuleset<TyperHitObject>
     {
-
         public DrawableTyperRuleset(TyperRuleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
             : base(ruleset, beatmap, mods)
         {

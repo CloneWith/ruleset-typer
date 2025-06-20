@@ -1,7 +1,6 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -42,7 +41,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             Origin = Anchor.CentreLeft;
             Anchor = Anchor.CentreLeft;
 
-            keyToHit = hitObject.key;
+            keyToHit = hitObject.Key;
 
             AddRangeInternal(new Drawable[]
             {
@@ -56,9 +55,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
                     RelativeSizeAxes = Axes.Both,
                     EdgeEffect = new EdgeEffectParameters
                     {
-                        Radius = 8,
-                        Colour = Color4Extensions.FromHex("483D8B"),
-                        Type = EdgeEffectType.Shadow,
+                        Radius = 8, Colour = Color4Extensions.FromHex("483D8B"), Type = EdgeEffectType.Shadow,
                     },
                     Children = new Drawable[]
                     {
@@ -75,7 +72,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
                             Font = OsuFont.Default.With(size: (hitObject.Radius * 2) * 0.6f, weight: FontWeight.Bold),
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Text = TyperRuleset.ActionToString(hitObject.key),
+                            Text = TyperRuleset.ActionToString(hitObject.Key),
                         }
                     }
                 },
@@ -88,6 +85,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
             validActionPressed = false;
         }
+
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
             if (!userTriggered)
@@ -132,6 +130,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
                 return wasCorrectKey && result;
             }
+
             return false;
             // return base.OnPressed(e);
         }
@@ -147,13 +146,13 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             }
             // base.OnReleased(e);
         }
-        
+
         protected override void UpdateInitialTransforms()
         {
             base.UpdateInitialTransforms();
 
             const float verticality = 80000;
-                
+
             Y = ((char)keyToHit - 'A') / 26f * verticality - (verticality * 0.5f);
             this.MoveToY(0, InitialLifetimeOffset, Easing.OutElasticHalf);
         }

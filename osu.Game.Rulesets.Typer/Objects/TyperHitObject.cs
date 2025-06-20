@@ -3,7 +3,6 @@
 
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Beatmaps;
-using System;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Legacy;
@@ -20,8 +19,10 @@ namespace osu.Game.Rulesets.Typer.Objects
         /// </summary>
         public const float OBJECT_RADIUS = 80;
 
-        public TyperAction key;
+        public TyperAction Key;
+
         public override Judgement CreateJudgement() => new TyperJudgement();
+
         protected override HitWindows CreateHitWindows() => new TyperHitWindows();
 
         public float Radius => OBJECT_RADIUS * Scale;
@@ -35,6 +36,7 @@ namespace osu.Game.Rulesets.Typer.Objects
             get => scale.Value;
             set => scale.Value = value;
         }
+
         protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, IBeatmapDifficultyInfo difficulty)
         {
             base.ApplyDefaultsToSelf(controlPointInfo, difficulty);

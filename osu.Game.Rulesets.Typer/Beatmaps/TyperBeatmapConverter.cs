@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
                         {
                             StartTime = j,
                             Samples = currentSamples,
-                            key = nextRandomKey(seedGenerator),
+                            Key = nextRandomKey(seedGenerator),
                         };
 
                         i = (i + 1) % allSamples.Count;
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Typer.Beatmaps
                     {
                         Samples = obj.Samples,
                         StartTime = obj.StartTime,
-                        key = nextRandomKey(seedGenerator),
+                        Key = nextRandomKey(seedGenerator),
                     };
 
                     break;
