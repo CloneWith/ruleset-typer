@@ -10,6 +10,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Typer.Beatmaps;
 using osu.Game.Rulesets.Typer.Mods;
 using osu.Game.Rulesets.Typer.UI;
@@ -20,6 +21,8 @@ namespace osu.Game.Rulesets.Typer
     public class TyperRuleset : Ruleset
     {
         public override string Description => "a very typer ruleset";
+
+        public override string PlayingVerb => "Hitting keys";
 
         public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) => new DrawableTyperRuleset(this, beatmap, mods);
 
@@ -121,6 +124,15 @@ namespace osu.Game.Rulesets.Typer
             Text = ShortName[0].ToString(),
             Font = OsuFont.Default.With(size: 18),
         };
+
+        protected override IEnumerable<HitResult> GetValidHitResults()
+        {
+            return new[]
+            {
+                HitResult.Great,
+                HitResult.Ok,
+            };
+        }
 
         // Leave this line intact. It will bake the correct version into the ruleset on each build/release.
         public override string RulesetAPIVersionSupported => CURRENT_RULESET_API_VERSION;
