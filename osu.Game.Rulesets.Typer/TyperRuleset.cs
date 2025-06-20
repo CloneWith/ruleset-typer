@@ -54,6 +54,7 @@ namespace osu.Game.Rulesets.Typer
                     return new Mod[]
                     {
                         new MultiMod(new TyperModAutoplay(), new TyperModCinema()),
+                        new TyperModRelax(),
                     };
 
                 case ModType.Conversion:
@@ -107,6 +108,7 @@ namespace osu.Game.Rulesets.Typer
             new KeyBinding(InputKey.Y, TyperAction.ButtonY),
             new KeyBinding(InputKey.Z, TyperAction.ButtonZ),
         };
+
         public static string ActionToString(TyperAction action)
         {
             return ((char)action).ToString();

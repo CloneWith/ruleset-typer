@@ -1,6 +1,7 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -21,6 +22,13 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 {
     public partial class DrawableTyperHitObject : DrawableHitObject<TyperHitObject>, IKeyBindingHandler<TyperAction>
     {
+        /// <summary>
+        /// A list of keys which can result in hits for this HitObject.
+        /// </summary>
+        public TyperAction[] HitActions { get; internal set; }
+
+        public bool AllowAnyKey { get; internal set; }
+
         private const double allowable_error = 150;
 
         private bool validActionPressed;
@@ -41,6 +49,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
             Origin = Anchor.CentreLeft;
             Anchor = Anchor.CentreLeft;
 
+            HitActions = [hitObject.Key];
             keyToHit = hitObject.Key;
 
             AddRangeInternal(new Drawable[]
@@ -83,6 +92,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
         {
             base.OnFree();
 
+            HitActions = null;
             validActionPressed = false;
         }
 
@@ -114,7 +124,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
             if (e.Repeat) return false;
 
-            validActionPressed = (char)e.Action == (char)keyToHit;
+            validActionPressed = AllowAnyKey || HitActions.Contains(e.Action);
 
             if (!Result.HasResult)
             {
@@ -137,7 +147,7 @@ namespace osu.Game.Rulesets.Typer.Objects.Drawables
 
         public void OnReleased(KeyBindingReleaseEvent<TyperAction> e)
         {
-            bool correctKey = e.Action == keyToHit;
+            bool correctKey = AllowAnyKey || HitActions.Contains(e.Action);
 
             if (State.Value != ArmedState.Hit && correctKey)
             {
