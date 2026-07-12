@@ -30,6 +30,8 @@ namespace osu.Game.Rulesets.Typer
 
         public override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) => new TyperDifficultyCalculator(RulesetInfo, beatmap);
 
+        public override PerformanceCalculator CreatePerformanceCalculator() => new TyperPerformanceCalculator();
+
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {
             return type switch
