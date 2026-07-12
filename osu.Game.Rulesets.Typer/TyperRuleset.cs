@@ -96,14 +96,12 @@ namespace osu.Game.Rulesets.Typer
             Icon = FontAwesome.Solid.Keyboard,
         };
 
-        public override IEnumerable<HitResult> GetValidHitResults()
-        {
-            return
-            [
-                HitResult.Great,
-                HitResult.Ok,
-            ];
-        }
+        public override IEnumerable<HitResult> GetValidHitResults() =>
+        [
+            HitResult.Great,
+            HitResult.Ok,
+            HitResult.Miss,
+        ];
 
         // Leave this line intact. It will bake the correct version into the ruleset on each build/release.
         public override string RulesetAPIVersionSupported => CURRENT_RULESET_API_VERSION;
