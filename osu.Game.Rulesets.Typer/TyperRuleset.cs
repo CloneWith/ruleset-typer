@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Bindings;
@@ -15,6 +16,9 @@ using osu.Game.Rulesets.Typer.Mods;
 using osu.Game.Rulesets.Typer.Scoring;
 using osu.Game.Rulesets.Typer.UI;
 using osu.Game.Rulesets.UI;
+using osu.Game.Scoring;
+using osu.Game.Screens.Ranking.Statistics;
+using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Typer
 {
@@ -105,6 +109,41 @@ namespace osu.Game.Rulesets.Typer
             HitResult.Ok,
             HitResult.Miss,
         ];
+
+        public override StatisticItem[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)
+        {
+            var timedHitEvents = score.HitEvents.ToList();
+
+            return
+            [
+                new StatisticItem("Performance Breakdown", () => new PerformanceBreakdownChart(score, playableBeatmap)
+                {
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                }),
+                new StatisticItem("Timing Distribution", () => new HitEventTimingDistributionGraph(timedHitEvents)
+                {
+                    RelativeSizeAxes = Axes.X,
+                    Height = 250,
+                }, true),
+                new StatisticItem("Statistics", () => new SimpleStatisticTable(2, [
+                    new AverageHitError(timedHitEvents),
+                    new UnstableRate(timedHitEvents),
+                ]), true),
+            ];
+        }
+
+        public override BeatmapDifficulty GetAdjustedDisplayDifficulty(IBeatmapInfo beatmapInfo, IReadOnlyCollection<Mod> mods)
+        {
+            BeatmapDifficulty adjustedDifficulty = base.GetAdjustedDisplayDifficulty(beatmapInfo, mods);
+            double rate = ModUtils.CalculateRateWithMods(mods);
+
+            double greatHitWindow = IBeatmapDifficultyInfo.DifficultyRange(adjustedDifficulty.OverallDifficulty, TyperHitWindows.GREAT_WINDOW_RANGE);
+            greatHitWindow /= rate;
+            adjustedDifficulty.OverallDifficulty = (float)IBeatmapDifficultyInfo.InverseDifficultyRange(greatHitWindow, TyperHitWindows.GREAT_WINDOW_RANGE);
+
+            return adjustedDifficulty;
+        }
 
         // Leave this line intact. It will bake the correct version into the ruleset on each build/release.
         public override string RulesetAPIVersionSupported => CURRENT_RULESET_API_VERSION;
