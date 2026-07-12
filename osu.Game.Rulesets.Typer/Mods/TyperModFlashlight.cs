@@ -14,8 +14,6 @@ namespace osu.Game.Rulesets.Typer.Mods
 {
     public partial class TyperModFlashlight : ModFlashlight<TyperHitObject>
     {
-        public override double ScoreMultiplier => UsesDefaultConfiguration ? 1.12 : 1;
-
         public override BindableFloat SizeMultiplier { get; } = new BindableFloat(1)
         {
             MinValue = 0.5f,

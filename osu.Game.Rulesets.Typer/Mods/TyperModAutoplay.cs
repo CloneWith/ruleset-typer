@@ -12,6 +12,7 @@ namespace osu.Game.Rulesets.Typer.Mods
     public class TyperModAutoplay : ModAutoplay
     {
         public override LocalisableString Description => @"Watch autoplayer smashing keys!";
+
         public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
             => new ModReplayData(new TyperAutoGenerator(beatmap).Generate(), new ModCreatedUser { Username = "sample" });
     }

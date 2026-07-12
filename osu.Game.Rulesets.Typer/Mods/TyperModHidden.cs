@@ -9,7 +9,6 @@ using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Typer.Objects;
 using osu.Game.Rulesets.Typer.Objects.Drawables;
-using osu.Game.Rulesets.Typer.UI;
 using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Typer.Mods
@@ -17,7 +16,6 @@ namespace osu.Game.Rulesets.Typer.Mods
     public class TyperModHidden : ModHidden, IApplicableToDrawableRuleset<TyperHitObject>
     {
         public override LocalisableString Description => @"Beats fade out before you hit them!";
-        public override double ScoreMultiplier => UsesDefaultConfiguration ? 1.06 : 1;
 
         /// <summary>
         /// How far away from the hit target should hitobjects start to fade out.
@@ -31,11 +29,8 @@ namespace osu.Game.Rulesets.Typer.Mods
         /// </summary>
         private const float fade_out_duration = 0.375f;
 
-        private DrawableTyperRuleset drawableRuleset = null!;
-
         public void ApplyToDrawableRuleset(DrawableRuleset<TyperHitObject> drawableRuleset)
         {
-            this.drawableRuleset = (DrawableTyperRuleset)drawableRuleset;
         }
 
         protected override void ApplyIncreasedVisibilityState(DrawableHitObject hitObject, ArmedState state)
@@ -48,9 +43,9 @@ namespace osu.Game.Rulesets.Typer.Mods
             switch (hitObject)
             {
                 case DrawableTyperHitObject:
-                    double preempt = 500; // TODO: Get a proper one.
+                    const double preempt = 500; // TODO: Get a proper one.
                     double start = hitObject.HitObject.StartTime - preempt * fade_out_start_time;
-                    double duration = preempt * fade_out_duration;
+                    const double duration = preempt * fade_out_duration;
 
                     using (hitObject.BeginAbsoluteSequence(start))
                     {

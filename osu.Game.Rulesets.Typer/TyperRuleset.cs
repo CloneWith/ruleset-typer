@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Typer.Beatmaps;
 using osu.Game.Rulesets.Typer.Mods;
+using osu.Game.Rulesets.Typer.Scoring;
 using osu.Game.Rulesets.Typer.UI;
 using osu.Game.Rulesets.UI;
 
@@ -84,6 +85,9 @@ namespace osu.Game.Rulesets.Typer
         {
             return ((char)action).ToString();
         }
+
+        public override ScoreMultiplierCalculator CreateScoreMultiplierCalculator(ScoreMultiplierContext context)
+            => new TyperScoreMultiplierCalculator(context);
 
         public override Drawable CreateIcon() => new SpriteIcon
         {
