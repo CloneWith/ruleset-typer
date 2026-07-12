@@ -1,7 +1,6 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -31,58 +30,28 @@ namespace osu.Game.Rulesets.Typer
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {
-            switch (type)
+            return type switch
             {
-                case ModType.DifficultyReduction:
-                    return new Mod[]
-                    {
-                        new TyperModEasy(),
-                        new TyperModNoFail(),
-                        new MultiMod(new TyperModHalfTime(), new TyperModDaycore()),
-                    };
-
-                case ModType.DifficultyIncrease:
-                    return new Mod[]
-                    {
-                        new TyperModHardRock(),
-                        new MultiMod(new TyperModSuddenDeath(), new TyperModPerfect()),
-                        new MultiMod(new TyperModDoubleTime(), new TyperModNightcore()),
-                        new TyperModHidden(),
-                        new TyperModFlashlight(),
-                        new ModAccuracyChallenge(),
-                    };
-
-                case ModType.Automation:
-                    return new Mod[]
-                    {
-                        new MultiMod(new TyperModAutoplay(), new TyperModCinema()),
-                        new TyperModRelax(),
-                    };
-
-                case ModType.Conversion:
-                    return new Mod[]
-                    {
-                        new TyperModDifficultyAdjust(),
-                        new TyperModConstantSpeed(),
-                    };
-
-                case ModType.Fun:
-                    return new Mod[]
-                    {
-                        new MultiMod(new ModWindUp(), new ModWindDown()),
-                        new TyperModMuted(),
-                        new ModAdaptiveSpeed(),
-                    };
-
-                default:
-                    return Array.Empty<Mod>();
-            }
+                ModType.DifficultyReduction => [new TyperModEasy(), new TyperModNoFail(), new MultiMod(new TyperModHalfTime(), new TyperModDaycore())],
+                ModType.DifficultyIncrease =>
+                [
+                    new TyperModHardRock(),
+                    new MultiMod(new TyperModSuddenDeath(), new TyperModPerfect()),
+                    new MultiMod(new TyperModDoubleTime(), new TyperModNightcore()),
+                    new TyperModHidden(),
+                    new TyperModFlashlight(), new ModAccuracyChallenge(),
+                ],
+                ModType.Automation => [new MultiMod(new TyperModAutoplay(), new TyperModCinema()), new TyperModRelax()],
+                ModType.Conversion => [new TyperModDifficultyAdjust(), new TyperModConstantSpeed()],
+                ModType.Fun => [new MultiMod(new ModWindUp(), new ModWindDown()), new TyperModMuted(), new ModAdaptiveSpeed()],
+                _ => [],
+            };
         }
 
         public override string ShortName => "typer";
 
-        public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
-        {
+        public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) =>
+        [
             new KeyBinding(InputKey.A, TyperAction.ButtonA),
             new KeyBinding(InputKey.B, TyperAction.ButtonB),
             new KeyBinding(InputKey.C, TyperAction.ButtonC),
@@ -109,7 +78,7 @@ namespace osu.Game.Rulesets.Typer
             new KeyBinding(InputKey.X, TyperAction.ButtonX),
             new KeyBinding(InputKey.Y, TyperAction.ButtonY),
             new KeyBinding(InputKey.Z, TyperAction.ButtonZ),
-        };
+        ];
 
         public static string ActionToString(TyperAction action)
         {
@@ -123,13 +92,13 @@ namespace osu.Game.Rulesets.Typer
             Icon = FontAwesome.Solid.Keyboard,
         };
 
-        protected override IEnumerable<HitResult> GetValidHitResults()
+        public override IEnumerable<HitResult> GetValidHitResults()
         {
-            return new[]
-            {
+            return
+            [
                 HitResult.Great,
                 HitResult.Ok,
-            };
+            ];
         }
 
         // Leave this line intact. It will bake the correct version into the ruleset on each build/release.
