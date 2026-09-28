@@ -116,7 +116,7 @@ namespace osu.Game.Rulesets.Typer
 
             return
             [
-                new StatisticItem("Performance Breakdown", () => new PerformanceBreakdownChart(score, playableBeatmap)
+                new StatisticItem("Performance Breakdown", () => new PerformanceBreakdownChart(score)
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
